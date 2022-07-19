@@ -2,6 +2,13 @@
 
 The benefits recommendation widget is an embeddable web component that presents links to apply for California benefits available to individudals.
 
+- The API is contacted when the frontend component is loaded on a new page.
+- The API accepts information about
+  - current site url
+  - current site visitor user agent and language preferences
+- The API returns the links to display with explanatory text in the desired language
+- The frontend widget displays links and records user activity events like: widget render, clicks on links
+
 <img src="benefits_recommend_API.png">
 
 ## Function
