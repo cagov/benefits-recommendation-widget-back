@@ -2,13 +2,15 @@
 
 The benefits recommendation widget is an embeddable web component that presents links to apply for California benefits available to individudals.
 
+<img src="benefits_recommend_API.png">
+
 ## Function
 
 This widget receives requests for benefit links when widgets load on pages. It accepts available information about the current site, user info like language preference. This API will return the set of benefits links to present as json.
 
 ## Built with
 
-## FAAS & DynamoDB
+### FAAS & DynamoDB
 
 This API is based on the AWS Function As A Service (FAAS) offering: AWS Lambda. This is the most mature FAAS option available from all cloud providers and gets you all the FAAS benefits of managed scalability, resilience and low cost as well as quick(sub second when the total code payload is under 5MB) cold starts.
 
