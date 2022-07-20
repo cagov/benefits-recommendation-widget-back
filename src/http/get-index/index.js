@@ -10,6 +10,6 @@ exports.handler = async function http (req) {
       'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
       'content-type': 'application/json'
     },
-    body: JSON.stringify(jsonResponse)
+    body: jsonResponse
   }
 }

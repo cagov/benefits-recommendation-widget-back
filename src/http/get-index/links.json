@@ -1,19 +1,36 @@
 {
+  "header": "Claim more benefits",
+  "tagline": "You could qualify to get:",
   "links": [
     {
-      "linktext": "",
-      "url": "",
-      "description": "url"
+      "linktext": "$12,420 in cash",
+      "description": "a year for families with children",
+      "program": "Apply to CalWORKS",
+      "url": "https://benefitscal.com/"
     },
     {
-      "linktext": "",
-      "url": "",
-      "description": "url"
+      "linktext": "$3,000 for energy bills",
+      "description": "a year",
+      "program": "Apply to LIHEAP",
+      "url": "https://www.caliheapapply.com/"
     },
     {
-      "linktext": "",
-      "url": "",
-      "description": "url"
+      "linktext": "$2,089 in tax credit",
+      "description": "a year",
+      "program": "Claim the Earned Income Tax Credit",
+      "url": "https://www.caleitc4me.org/"
+    },
+    {
+      "linktext": "$7,896 for food",
+      "description": "a year",
+      "program": "Apply to CalFresh",
+      "url": "https://www.getcalfresh.org/"
+    },
+    {
+      "linktext": "$1,092 for food",
+      "description": "a year for families with young children",
+      "program": "Apply to WIC",
+      "url": "https://www.phfewic.org/how-wic-works/apply-for-wic/"
     }
   ]
 }
