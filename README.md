@@ -55,8 +55,8 @@ This widget also accepts information about widget placement and user interaction
 
 ### Sample data sructure
 
-| event      | timestamp      | displayUrl | userAgent      | language | link |
-| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| event       | timestamp    | displayUrl   | userAgent     | language    | link        |
+| ----------- | -----------  | -----------  | -----------   | ----------- | ----------- |
 | render | 1658256582717 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | |
 | entered viewport | 1658256582717 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | |
 | click | 1658256627366 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | https://www.caliheapapply.com/ |
