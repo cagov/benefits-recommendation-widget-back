@@ -1,14 +1,14 @@
 const test = require('tape')
 const tiny = require('tiny-json-http')
 const sandbox = require('@architect/sandbox')
-
+const targetServer = 'http://localhost:3333'
 /**
  * first we need to start the local http server
  */
 test('sandbox.start', async t=> {
   t.plan(1)
   await sandbox.start({ quiet: true })
-  t.ok(true, 'sandbox started on http://localhost:3333')
+  t.ok(true, `sandbox started on ${targetServer}`)
 })
 
 /**
@@ -16,15 +16,15 @@ test('sandbox.start', async t=> {
  */
 test('get /', async t=> {
   t.plan(1)
-  let result = await tiny.get({ url: 'http://localhost:3333' })
+  let result = await tiny.get({ url: targetServer })
   t.ok(result, 'got 200 response')
-  console.log(result)
+  // console.log(result)
 })
 
 test('post /event', async t=> {
   t.plan(1)
   let result = await tiny.post({
-    url: 'http://localhost:3333/event',
+    url: targetServer+'/event',
     data: {
       event: 'render',
       displayURL: 'https://awebsite.ca.gov',
@@ -35,7 +35,7 @@ test('post /event', async t=> {
     }
   })
   t.ok(result.body.json.hasOwnProperty('event'), 'got event response back')
-  console.log(result.body)
+  // console.log(result.body)
 })
 
 /**

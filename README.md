@@ -12,6 +12,33 @@ This widget will be placed on different sites which aren't currently using googl
 
 <img src="benefits_recommend_API.png">
 
+## Test
+
+Local tests can be run via:
+```
+node tests/http-test.js
+```
+
+Test scripts fire up the sandbox server with dependencies and are run using ```tape```
+
+Expected output from successful test:
+```
+TAP version 13
+# sandbox.start
+ok 1 sandbox started on http://localhost:3333
+# get /
+ok 2 got 200 response
+# post /event
+ok 3 got event response back
+# sandbox.end
+ok 4 sandbox ended
+
+1..4
+# tests 4
+# pass  4
+
+# ok
+```
 
 ## Built with
 
