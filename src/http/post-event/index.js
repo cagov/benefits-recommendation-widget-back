@@ -33,12 +33,14 @@ exports.handler = async function http (req) {
     let event = await events.put(req.body);
 
     return {
+      cors: true,
       status: 201,
       json: event
     }
   }
   catch(e) {
-    return {
+    return {      
+      cors: true,
       status: 500,
       json: {
         name: e.name,

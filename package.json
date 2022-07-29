@@ -1,5 +1,5 @@
 {
-  "name": "@cagov/benefits-recommendation-widget-back",
+  "name": "@cagov/benefits-recommendation-api",
   "version": "1.0.0",
   "description": "Benefits recommendation API",
   "scripts": {
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@architect/functions": "^5.2.1"
+    "@architect/functions": "^5.2.1",
+    "arc-macro-cors": "^2.0.0"
   }
 }

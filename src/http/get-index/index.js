@@ -5,11 +5,9 @@ exports.handler = async function http (req) {
   //Todo: create translated versions of link content, send translaterd version based on passed in language
 
   return {
+    cors: true,
     statusCode: 200,
-    headers: {
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
-      'content-type': 'application/json'
-    },
+    type: 'application/javascript',
     body: jsonResponse
   }
 }

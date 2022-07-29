@@ -1,6 +1,7 @@
 @app
-benefits-recommendation-widget-back
+benefits-recommendation-api
 
+@cors
 @http
 get /
 post /event
