@@ -3,8 +3,13 @@ benefits-recommendation-api
 
 @cors
 @http
-get /
+get /benefits
+options /benefits
 post /event
+get /data
+
+@macros
+arc-macro-cors
 
 @tables
 events

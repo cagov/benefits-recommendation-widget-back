@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Benefits recommendation API",
   "scripts": {
-    "start": "npx sandbox"
+    "start": "npx sandbox",
+    "test": "node tests/http-test.js"
   },
   "devDependencies": {
     "@architect/architect": "^10.3.4",

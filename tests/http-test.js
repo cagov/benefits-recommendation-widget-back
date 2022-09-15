@@ -1,7 +1,9 @@
-const test = require('tape')
-const tiny = require('tiny-json-http')
-const sandbox = require('@architect/sandbox')
-const targetServer = 'http://localhost:3333'
+const test = require('tape');
+const tiny = require('tiny-json-http');
+const sandbox = require('@architect/sandbox');
+let arc = require('@architect/functions');
+const targetServer = 'http://localhost:3333';
+
 /**
  * first we need to start the local http server
  */
@@ -14,9 +16,9 @@ test('sandbox.start', async t=> {
 /**
  * then we can make a request to it and check the result
  */
-test('get /', async t=> {
+test('get /benefits', async t=> {
   t.plan(1)
-  let result = await tiny.get({ url: targetServer })
+  let result = await tiny.get({ url: targetServer + "/benefits" })
   t.ok(result, 'got 200 response')
   // console.log(result)
 })
@@ -37,6 +39,15 @@ test('post /event', async t=> {
   t.ok(result.body.json.hasOwnProperty('event'), 'got event response back')
   // console.log(result.body)
 })
+
+test('db', async t => {
+  t.plan(1)
+  let data = await arc.tables()
+  let events = await data.events.scan({})
+  console.log(events)
+  t.ok(Array.isArray(events.Items), 'found some items')
+})
+
 
 /**
  * finally close the server so we cleanly exit the test

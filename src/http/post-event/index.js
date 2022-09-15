@@ -16,21 +16,31 @@ exports.handler = async function http (req) {
   let client = await arc.tables();
   let events = client.events;
 
+  let incomingString = req.body;
+  if(req.body.indexOf('userAgent') === -1) {
+    let buff = Buffer.from(req.body, 'base64');
+    incomingString = buff.toString('ascii');
+  }
+  let postData = incomingString;
   if(typeof(req.body) === 'string') {
-    req.body = JSON.parse(req.body);
+    postData = JSON.parse(incomingString);
   }
 
   try {
-    if (!req.body.event)
+    if (!postData.event)
       throw ReferenceError('missing event type');
 
-    if (!req.body.displayURL)
+    if (!postData.displayURL)
       throw ReferenceError('missing displayUrl');
 
-    req.body.eventKey = req.body.event;
-    req.body.timestamp = new Date().getTime().toString();
+    postData.eventKey = postData.event;
+    postData.timestamp = new Date().getTime().toString();
 
-    let event = await events.put(req.body);
+    // store the event object in DynamoDB
+    let event = await events.put(postData);
+
+    console.log('data recorded')
+    console.log(postData)
 
     return {
       cors: true,
