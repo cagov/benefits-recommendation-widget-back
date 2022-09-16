@@ -6,7 +6,6 @@ benefits-recommendation-api
 get /benefits
 options /benefits
 post /event
-get /data
 
 @macros
 arc-macro-cors
@@ -19,6 +18,7 @@ events
 @tables-indexes
 events
   timestamp *String
+  name eventsByTime
 
 @aws
 # profile default

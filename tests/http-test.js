@@ -40,14 +40,39 @@ test('post /event', async t=> {
   // console.log(result.body)
 })
 
+// scan and get events
 test('db', async t => {
   t.plan(1)
   let data = await arc.tables()
   let events = await data.events.scan({})
-  console.log(events)
+  // console.log(events)
   t.ok(Array.isArray(events.Items), 'found some items')
 })
 
+// query for events that are in a specific domain
+test('dbquery', async t => {
+  t.plan(1)
+  let data = await arc.tables()
+  let awebViews = await data.events.query({
+    KeyConditionExpression: "eventKey = :eventKey AND begins_with(displayURL, :displayURL)",
+    ExpressionAttributeValues: { ":eventKey": 'render', ":displayURL": 'https://awebsite.ca.gov' }
+  })
+  console.log(awebViews)
+  t.ok(Array.isArray(awebViews.Items), 'queried some items')
+})
+
+// count the events
+test('dbquerycount', async t => {
+  t.plan(1)
+  let data = await arc.tables()
+  let awebViews = await data.events.query({
+    KeyConditionExpression: "eventKey = :eventKey AND begins_with(displayURL, :displayURL)",
+    ExpressionAttributeValues: { ":eventKey": 'render', ":displayURL": 'https://awebsite.ca.gov' },
+    Select: "COUNT"
+  })
+  console.log(awebViews)
+  t.ok(awebViews.Count >= 0, 'queried and then counted some items')
+})
 
 /**
  * finally close the server so we cleanly exit the test
