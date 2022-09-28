@@ -18,7 +18,6 @@ events
 @tables-indexes
 events
   timestamp *String
-  name eventsByTime
 
 @aws
 # profile default
