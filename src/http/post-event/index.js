@@ -33,8 +33,8 @@ exports.handler = async function http (req) {
     if (!postData.displayURL)
       throw ReferenceError('missing displayUrl');
 
-    postData.eventKey = postData.event;
     postData.timestamp = new Date().getTime().toString();
+    postData.eventKey = `${postData.event}-${postData.timestamp}-${Math.random()}`;
 
     // store the event object in DynamoDB
     let event = await events.put(postData);
