@@ -69,6 +69,12 @@ Architect is helpful for starting out because:
 
 This framework speeds up initial development but the code for the individual lambdas is written in the same node.js code you could paste directly into the AWS Lambda online code editor. If you want to abandon the architect framework you can still use all the code you have written.
 
+# Throttling
+
+This widget is deployed in partnership with the agencies linked to. We need to be conscious of their application load and not overwhelm them with spikes. We can do this by throttling the widget display frequency. 
+
+This can be easily controlled at the AWS API Gateway. We can set a throttle level of 0 and the Lambda will not respond to any requests. This is helpful for short test runs which have been requested by our partners. The widget is designed to fail gracefully, if the API does not respond the frontend will never display any HTML to the end user.
+
 ## Event tracking
 
 This widget also accepts information about widget placement and user interactions like:
