@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Transform": "AWS::Serverless-2016-10-31",
-  "Description": "Exported by architect/package@8.1.3 on 2022-11-29T19:20:50.835Z",
+  "Description": "Exported by architect/package@8.1.3 on 2022-11-30T20:28:31.767Z",
   "Resources": {
     "Role": {
       "Type": "AWS::IAM::Role",
@@ -343,7 +343,7 @@
         "Environment": {
           "Variables": {
             "ARC_APP_NAME": "benefits-recommendation-api",
-            "ARC_ENV": "production",
+            "ARC_ENV": "staging",
             "ARC_ROLE": {
               "Ref": "Role"
             },
@@ -398,7 +398,7 @@
         "Environment": {
           "Variables": {
             "ARC_APP_NAME": "benefits-recommendation-api",
-            "ARC_ENV": "production",
+            "ARC_ENV": "staging",
             "ARC_ROLE": {
               "Ref": "Role"
             },
@@ -452,7 +452,7 @@
         "Environment": {
           "Variables": {
             "ARC_APP_NAME": "benefits-recommendation-api",
-            "ARC_ENV": "production",
+            "ARC_ENV": "staging",
             "ARC_ROLE": {
               "Ref": "Role"
             },
@@ -507,7 +507,7 @@
         "Environment": {
           "Variables": {
             "ARC_APP_NAME": "benefits-recommendation-api",
-            "ARC_ENV": "production",
+            "ARC_ENV": "staging",
             "ARC_ROLE": {
               "Ref": "Role"
             },
