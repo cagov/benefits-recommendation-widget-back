@@ -37,10 +37,13 @@ exports.handler = async function http (req) {
 
     postData.timestamp = new Date().getTime().toString();
     // in DynamoDB the eventKey is the partition key. It needs to be a fully reproducible string required in queries
-    postData.eventKey = `${postData.event}-${postData.link}`;
+    postData.eventKey = `${postData.event}`;
+    if(postData.link) {
+      postData.eventKey += `-${postData.link}`;
+    }
     postData.pageUrl = postData.displayURL
     // in DynamoDB the displayUrl is the sort key, the combination of the partition key and sort key needs to be unique or records are overwritten
-    postData.displayUrl += `---${postData.timestamp}-${Math.random()}`; 
+    postData.displayURL += `---${postData.timestamp}-${Math.random()}`; 
 
 
     // store the event object in DynamoDB
