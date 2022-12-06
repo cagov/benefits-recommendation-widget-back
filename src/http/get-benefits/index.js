@@ -6,23 +6,25 @@ exports.handler = arc.http.async(handler)
 async function handler (req) {
   console.log('calling /benefits get')
   const jsonResponse = fs.readFileSync('./links.json','utf8');
+  const jsonData = JSON.parse(jsonResponse);
 
-  if(jsonResponse.links.length > 3){
+  if(jsonData.links.length > 3){
     // mutate link set to be the shuffled top 3
     let chosenLinks = shuffle(jsonData.links).slice(0,3);
     jsonData.links = chosenLinks;
     // identify this set of links by a variation key composed of all the keys of the items in order
+    jsonData.experimentVariation = '';
     chosenLinks.forEach((item, index) => { 
-      jsonData.variation += `${item.key}`;
+      jsonData.experimentVariation += `${item.key}`;
       if(index < 2) {
-        jsonData.variation += '-';
+        jsonData.experimentVariation += '-';
       }
     })
   }
 
   return {
     cors: true,
-    json: jsonResponse
+    json: JSON.stringify(jsonData)
   }
 }
 

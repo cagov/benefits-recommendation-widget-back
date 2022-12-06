@@ -1,7 +1,7 @@
 {
   "header": "Claim more benefits!",
   "tagline": "You could qualify to get:",
-  "experiment": "2022-12-06-safe-set-link-order",
+  "experimentName": "2022-12-06-safe-set-link-order",
   "links": [
     {
       "linktext": "Help paying water bills",
