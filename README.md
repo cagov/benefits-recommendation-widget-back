@@ -12,6 +12,33 @@ This widget will be placed on different sites which aren't currently using googl
 
 <img src="benefits_recommend_API.png">
 
+## Test
+
+Local tests can be run via:
+```
+node tests/http-test.js
+```
+
+Test scripts fire up the sandbox server with dependencies and are run using ```tape```
+
+Expected output from successful test:
+```
+TAP version 13
+# sandbox.start
+ok 1 sandbox started on http://localhost:3333
+# get /
+ok 2 got 200 response
+# post /event
+ok 3 got event response back
+# sandbox.end
+ok 4 sandbox ended
+
+1..4
+# tests 4
+# pass  4
+
+# ok
+```
 
 ## Built with
 
@@ -42,6 +69,12 @@ Architect is helpful for starting out because:
 
 This framework speeds up initial development but the code for the individual lambdas is written in the same node.js code you could paste directly into the AWS Lambda online code editor. If you want to abandon the architect framework you can still use all the code you have written.
 
+# Throttling
+
+This widget is deployed in partnership with the agencies linked to. We need to be conscious of their application load and not overwhelm them with spikes. We can do this by throttling the widget display frequency. 
+
+This can be easily controlled at the AWS API Gateway. We can set a throttle level of 0 and the Lambda will not respond to any requests. This is helpful for short test runs which have been requested by our partners. The widget is designed to fail gracefully, if the API does not respond the frontend will never display any HTML to the end user.
+
 ## Event tracking
 
 This widget also accepts information about widget placement and user interactions like:
@@ -55,30 +88,32 @@ This widget also accepts information about widget placement and user interaction
 
 ### Sample data sructure
 
-| event      | timestamp      | displayUrl | userAgent      | language | link |
-| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+| event       | timestamp    | displayUrl   | userAgent     | language    | link        |
+| ----------- | -----------  | -----------  | -----------   | ----------- | ----------- |
 | render | 1658256582717 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | |
 | entered viewport | 1658256582717 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | |
 | click | 1658256627366 | https://edd.ca.gov/status | Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | en-US | https://www.caliheapapply.com/ |
 
-### Expected queries
+## Development
 
-- Count of widget renders on each domain
-- Count of widget renders on each unique url
-- Count of widget entering viewport on each domain
-- Count of widget entering viewport on each unique url
-- Count of clicks on widget on each domain
-- Count of clicks on widget on each unique url
-- Count of clicks on each presented widget link
-- Language breakdown overall
-- Language breakdown per display domain
-- Count of clicks overall
-- Count of clicks to each destination overall
+This API is created using <a href="https://arc.codes/docs/en/get-started/quickstart">arc.codes</a>
 
-In order to support the expected queries the following partition and sort key fields will be created in DynamoDB:
+Run locally for testing:
+```
+npx arc sandbox
+```
 
-| Partition key     | sort key    | GSI         | results     |
-| -----------       | ----------- | ----------- | ----------- |
-| event             | displayUrl  | time        | { "render", 1658256627366, "https://edd.ca.gov/status", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36", "en-US", "" }
-| event_clickurl    | displayUrl  | time        | { "click", 1658256627366, "https://edd.ca.gov/status", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36", "en-US", "https://www.caliheapapply.com/" }
-| event_language    | displayUrl  | time        | { "click", 1658256627366, "https://edd.ca.gov/status", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36", "en-US", "https://www.caliheapapply.com/" }
+Deploy to staging via:
+```
+npx arc deploy
+```
+
+Which will created endpoints at https://7ksmy2xna5.execute-api.us-west-1.amazonaws.com
+
+
+Deploy to production using:
+```
+npx arc deploy --production
+```
+
+Will create endpoints at: https://k61aw4mwkc.execute-api.us-west-1.amazonaws.com

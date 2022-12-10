@@ -1,9 +1,14 @@
 @app
-benefits-recommendation-widget-back
+benefits-recommendation-api
 
+@cors
 @http
-get /
+get /benefits
+options /benefits
 post /event
+
+@macros
+arc-macro-cors
 
 @tables
 events
@@ -15,5 +20,4 @@ events
   timestamp *String
 
 @aws
-# profile default
 region us-west-1
