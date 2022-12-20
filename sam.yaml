@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exported by architect/package@8.1.3 on 2022-12-19T20:40:03.229Z
+Description: Exported by architect/package@8.1.3 on 2022-12-19T21:58:29.142Z
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -197,7 +197,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/5b56260fe4c39949e7315e43e8bb20fc
+      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/ca6ece8bcfaad5b0b82cd211934a2dd2
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -208,7 +208,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -245,7 +245,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -270,7 +270,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/6336452a465f466725c6b9b10f157830
+      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/c22befb0c596954fffdff203090bd3ef
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -281,7 +281,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -318,7 +318,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
