@@ -98,6 +98,13 @@ This widget also accepts information about widget placement and user interaction
 
 This API is created using <a href="https://arc.codes/docs/en/get-started/quickstart">arc.codes</a>
 
+Run automated tests:
+These tests will hit the api, then query it to make sure records are being saved, this all runs against the local DynamoDB emulator so does not put data into staging or production AWS databases
+```
+npm test
+```
+
+
 Run locally for testing:
 ```
 npx arc sandbox
