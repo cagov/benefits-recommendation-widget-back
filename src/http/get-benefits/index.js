@@ -8,7 +8,7 @@ async function handler (req) {
   const jsonResponse = fs.readFileSync('./links.json','utf8');
   const jsonData = JSON.parse(jsonResponse);
 
-  if(jsonData.links.length > 3){
+  if(jsonData.links.length > 2){
     // mutate link set to be the shuffled top 3
     let chosenLinks = shuffle(jsonData.links).slice(0,3);
     jsonData.links = chosenLinks;
