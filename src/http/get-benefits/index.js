@@ -5,10 +5,19 @@ exports.handler = arc.http.async(handler)
 
 async function handler (req) {
   console.log('calling /benefits get')
-  const jsonResponse = fs.readFileSync('./links.json','utf8');
+
+  let jsonResponse;
+  let randomizeOrder = false;
+  // do random selection between links-bcf and links-gcf
+  if(Math.random() < 0.5) {
+    jsonResponse = fs.readFileSync('./links-gcf.json','utf8');
+  } else {
+    jsonResponse = fs.readFileSync('./links-bcf.json','utf8');
+  }
+
   const jsonData = JSON.parse(jsonResponse);
 
-  if(jsonData.links.length > 2){
+  if(jsonData.links.length > 2 && randomizeOrder){
     // mutate link set to be the shuffled top 3
     let chosenLinks = shuffle(jsonData.links).slice(0,3);
     jsonData.links = chosenLinks;
@@ -20,6 +29,8 @@ async function handler (req) {
         jsonData.experimentVariation += '-';
       }
     })
+  } else {
+    // when the above condition is not true experimentVariation hardcoded inside the json will be used
   }
 
   return {
