@@ -7,13 +7,14 @@ async function handler (req) {
   console.log('calling /benefits get')
 
   let jsonResponse;
-  let randomizeOrder = false;
-  // do random selection between links-bcf and links-gcf
+  let randomizeOrder = true;
+  /* do random selection between links-bcf and links-gcf
   if(Math.random() < 0.5) {
     jsonResponse = fs.readFileSync('./links-gcf.json','utf8');
   } else {
     jsonResponse = fs.readFileSync('./links-bcf.json','utf8');
-  }
+  }*/
+  jsonResponse = fs.readFileSync('./links-minimal.json','utf8');
 
   const jsonData = JSON.parse(jsonResponse);
 
