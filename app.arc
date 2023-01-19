@@ -14,6 +14,9 @@ arc-macro-cors
 events
   eventKey *String
   displayURL **String
+throttleclicks
+  name *String
+  day **String
 
 @tables-indexes
 events
