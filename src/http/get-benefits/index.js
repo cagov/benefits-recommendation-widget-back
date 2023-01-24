@@ -1,5 +1,6 @@
 let arc = require('@architect/functions')
 const fs = require("fs");
+const getThrottles = require("@architect/shared/get-throttles.js");
 
 exports.handler = arc.http.async(handler)
 
@@ -11,7 +12,7 @@ async function handler (req) {
     let throttleReached = false;
     let name = 'CALFRESH';
 
-    let allThrottles = JSON.parse(fs.readFileSync('./throttles.json','utf8'));
+    let allThrottles = getThrottles.default();
     let allowedLimit = 1000; // get this from throttles json
     
     allThrottles.experimentsToThrottle.forEach(exp => {

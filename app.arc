@@ -10,6 +10,8 @@ post /event
 @macros
 arc-macro-cors
 
+@shared
+
 @tables
 events
   eventKey *String

@@ -1,6 +1,6 @@
 //@ts-check
 let arc = require('@architect/functions');
-const fs = require("fs");
+const getThrottles = require("@architect/shared/get-throttles.js");
 
 /**
 * @description Event receiving endpoint for benefits recommendation widget
@@ -56,14 +56,17 @@ exports.handler = async function http (req) {
       console.log('recording a click event to throttles table');
 
       // read throttles.json
-      let allThrottles = JSON.parse(fs.readFileSync('../get-benefits/throttles.json','utf8'));
+      let allThrottles = getThrottles.default();
+      console.log(allThrottles);
       let name = 'CALFRESH';
       // find relevant throttle
       allThrottles.experimentsToThrottle.forEach(exp => {
         if(exp.name === name) {
           // if url clicked matches record event
+          console.log('a throttled name matches '+name)
           exp.urls.forEach(async url => {
             if(url === postData.link) {
+              console.log('url match')
               let name = 'CALFRESH';
               let day = new Date().toISOString().split('T')[0].toString();
               // increment counter, if record not there create it
@@ -89,6 +92,7 @@ exports.handler = async function http (req) {
     }
   }
   catch(e) {
+    console.log(e);
     return {      
       cors: true,
       status: 500,
