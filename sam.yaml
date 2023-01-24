@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exported by architect/package@8.1.3 on 2023-01-04T21:12:19.313Z
+Description: Exported by architect/package@8.1.3 on 2023-01-24T20:47:10.517Z
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -56,6 +56,14 @@ Resources:
               - arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*
               - tablename:
                   Ref: EventsTable
+            - Fn::Sub:
+              - arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}
+              - tablename:
+                  Ref: ThrottleclicksTable
+            - Fn::Sub:
+              - arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${tablename}/*
+              - tablename:
+                  Ref: ThrottleclicksTable
           - Effect: Deny
             Action: dynamodb:DeleteTable
             Resource:
@@ -70,6 +78,16 @@ Resources:
         - tablename: events
       Value:
         Ref: EventsTable
+  ThrottleclicksParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Type: String
+      Name:
+        Fn::Sub:
+        - /${AWS::StackName}/tables/${tablename}
+        - tablename: throttleclicks
+      Value:
+        Ref: ThrottleclicksTable
   StaticBucketParam:
     Type: AWS::SSM::Parameter
     Properties:
@@ -197,7 +215,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/0287ba16259940353a921f4e1dbd47fc
+      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/fa6e62b43e2790e1447359125a8178a2
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -208,7 +226,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -245,7 +263,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -270,7 +288,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/e8d023ff5c8eeb607d72517364aa69bb
+      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/2e3e8603ecded8139cfaabbcfcb0f084
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -281,7 +299,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -307,7 +325,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/0b5345aa950371653a896611f3e11deb
+      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/2f8a2c817ebb4c09b6fae1780810827e
       Runtime: nodejs14.x
       Architectures:
       - x86_64
@@ -318,7 +336,7 @@ Resources:
       Environment:
         Variables:
           ARC_APP_NAME: benefits-recommendation-api
-          ARC_ENV: staging
+          ARC_ENV: production
           ARC_ROLE:
             Ref: Role
           ARC_SESSION_TABLE_NAME: jwe
@@ -363,6 +381,20 @@ Resources:
           KeyType: HASH
         Projection:
           ProjectionType: ALL
+  ThrottleclicksTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema:
+      - AttributeName: name
+        KeyType: HASH
+      - AttributeName: day
+        KeyType: RANGE
+      AttributeDefinitions:
+      - AttributeName: name
+        AttributeType: S
+      - AttributeName: day
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
   StaticBucket:
     Type: AWS::S3::Bucket
     Properties:

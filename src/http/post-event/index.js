@@ -1,5 +1,6 @@
 //@ts-check
 let arc = require('@architect/functions');
+const getThrottles = require("@architect/shared/get-throttles.js");
 
 /**
 * @description Event receiving endpoint for benefits recommendation widget
@@ -45,12 +46,44 @@ exports.handler = async function http (req) {
     // in DynamoDB the displayUrl is the sort key, the combination of the partition key and sort key needs to be unique or records are overwritten
     postData.displayURL += `---${postData.timestamp}-${Math.random()}`; 
 
-
     // store the event object in DynamoDB
     let event = await events.put(postData);
 
-    console.log('data recorded')
+    console.log('event data recorded')
     console.log(postData)
+
+    if(postData.event === 'click') { // record a click to the throttle table
+      console.log('recording a click event to throttles table');
+
+      // read throttles.json
+      let allThrottles = getThrottles.default();
+      console.log(allThrottles);
+      let name = 'CALFRESH';
+      // find relevant throttle
+      allThrottles.experimentsToThrottle.forEach(exp => {
+        if(exp.name === name) {
+          // if url clicked matches record event
+          console.log('a throttled name matches '+name)
+          exp.urls.forEach(async url => {
+            if(url === postData.link) {
+              console.log('url match')
+              let name = 'CALFRESH';
+              let day = new Date().toISOString().split('T')[0].toString();
+              // increment counter, if record not there create it
+              let throttleUpdate = await client.throttleclicks.update({
+                Key: { name, day },
+                UpdateExpression: 'SET hits = if_not_exists(hits, :start) + :inc',
+                ExpressionAttributeValues: {
+                  ':inc': 1,
+                  ':start': 0
+                }
+              })
+              console.log(throttleUpdate);
+            }
+          })
+        }
+      })
+    }
 
     return {
       cors: true,
@@ -59,6 +92,7 @@ exports.handler = async function http (req) {
     }
   }
   catch(e) {
+    console.log(e);
     return {      
       cors: true,
       status: 500,

@@ -10,10 +10,15 @@ post /event
 @macros
 arc-macro-cors
 
+@shared
+
 @tables
 events
   eventKey *String
   displayURL **String
+throttleclicks
+  name *String
+  day **String
 
 @tables-indexes
 events
