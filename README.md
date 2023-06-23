@@ -124,3 +124,9 @@ npx arc deploy --production
 ```
 
 Will create endpoints at: https://k61aw4mwkc.execute-api.us-west-1.amazonaws.com
+
+## CORS
+
+There is a cors section defined in the app.arc file. This sets the API Gateway CORS permissions to allow external requests. This feature comes from the <a href="https://github.com/thedersen/arc-macro-cors">arc-macro-cors</a> package. This package allows us to skip manually opening cors permissions at the API Gateway level after deploying the lambda the first time.
+
+There is also an /options path defined in the app.arc file leading to the src/http/options-benefits path which will respond with liberal cors headers. This is only necessary for local development because API Gateway is not present.
