@@ -1,101 +1,88 @@
-let arc = require('@architect/functions')
-const fs = require("fs");
-const getThrottles = require("@architect/shared/get-throttles.js");
+let arc = require("@architect/functions");
+const throttleDefs = require("@architect/shared/throttles.json");
+const linkDefs = require("./links.json");
 
-exports.handler = arc.http.async(handler)
+exports.handler = arc.http.async(handler);
 
-async function handler (req) {
-  let jsonData;
+async function handler(req) {
+  // Partner comes in via URL query parameter.
+  // We will need this in the weeks to come.
+  // const partner = req.query.partner;
 
   try {
-    // query the throttles table for every url I am concerned with that matches today
-    let throttleReached = false;
-    let name = 'CALFRESH';
+    const throttles = [...throttleDefs];
 
-    let allThrottles = getThrottles.default();
-    let allowedLimit = 1000; // get this from throttles json
-    
-    allThrottles.experimentsToThrottle.forEach(exp => {
-      if(exp.name === name) {
-        allowedLimit = exp.limit;
-        console.log('set limit to '+allowedLimit);
-      }
-    })
+    const day = new Date().toISOString().split("T")[0].toString();
+    const dynamo = await arc.tables();
 
-    let day = new Date().toISOString().split('T')[0].toString();
-    let client = await arc.tables();
+    // Query each throttle in DynamoDB to see if we've reached the limit.
+    // Add current stats to each throttle object.
+    const promises = throttles.map(async (throttle) => {
+      const name = throttle.name;
+      return dynamo.throttleclicks.get({ name, day }).then((response) => {
+        const count = response?.hits || 0;
+        throttle.count = count;
+        throttle.exceeded = count >= throttle.limit;
+        console.log(
+          `Throttle for ${name} on ${day} is at ${count}/${throttle.limit}.`
+        );
+      });
+    });
 
-    console.log(name)
-    console.log(day)
+    // Wait for all of our throttle queries to finish.
+    await Promise.all(promises);
 
-    let throttleCount = await client.throttleclicks.get({ name, day })
-    console.log('throttle count is')
-    console.log(throttleCount); // undefined if no match which is valid if we didn't record any clicks yet today
-    
-    // if there is a record check against throttleCount.limit
-    if(throttleCount && throttleCount.hits >= allowedLimit) {
-      throttleReached = true;
-    }
-    // if it is below throttle levels we can return throttled data set
-    if(!throttleReached) {
-      jsonData = returnThrottledData();
-    // if it is above throttles, display fallback content
-    } else {
-      jsonData = returnDefaultData();
-    }
-      
+    console.log(throttles);
+
+    const allowedLinks = pickAllowedLinks(throttles, 3);
+    const data = assembleData(allowedLinks);
+
     return {
       cors: true,
-      json: JSON.stringify(jsonData)
-    }
-
-  }
-  catch(e) {
+      json: JSON.stringify(data),
+    };
+  } catch (e) {
     // error occurred trying to lookup throttles
     console.log(e);
 
-    jsonData = returnDefaultData();
-    
+    const randomLinks = pickRandom(linkDefs.links, 3);
+    const data = assembleData(randomLinks);
+
     // return default info
     return {
       cors: true,
-      json: JSON.stringify(jsonData)
-    }
+      json: JSON.stringify(data),
+    };
   }
 }
 
-function shuffle(o){ for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x); return o; };
-
-function returnThrottledData() {
-  // do random selection between links-bcf and links-gcf
-  if(Math.random() < 0.5) {
-    jsonResponse = fs.readFileSync('./links-gcf.json','utf8');
-  } else {
-    jsonResponse = fs.readFileSync('./links-bcf.json','utf8');
-  }
-  let jsonData = JSON.parse(jsonResponse);
-  return jsonData;
+function pickRandom(array, n = 3) {
+  return array
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value)
+    .slice(0, n);
 }
 
-function returnDefaultData() {
-  let jsonResponse = fs.readFileSync('./links-minimal.json','utf8');
+function pickAllowedLinks(throttles, n) {
+  const links = { ...linkDefs };
 
-  const jsonData = JSON.parse(jsonResponse);
+  const data = links.links.reduce((bucket, link) => {
+    const blockingThrottles = throttles.filter(
+      (throttle) => throttle.urls.includes(link.url) && throttle.exceeded
+    );
 
-  if(jsonData.links.length > 2){
-    // mutate link set to be the shuffled top 3
-    let chosenLinks = shuffle(jsonData.links).slice(0,3);
-    jsonData.links = chosenLinks;
-    // identify this set of links by a variation key composed of all the keys of the items in order
-    jsonData.experimentVariation = '';
-    chosenLinks.forEach((item, index) => { 
-      jsonData.experimentVariation += `${item.key}`;
-      if(index < 2) {
-        jsonData.experimentVariation += '-';
-      }
-    })
-  } else {
-    // when the above condition is not true experimentVariation hardcoded inside the json will be used
-  }
-  return jsonData;
+    if (blockingThrottles.length < 1) bucket.push(link);
+    return bucket;
+  }, []);
+
+  return pickRandom(data, n);
+}
+
+function assembleData(links) {
+  return Object.assign(linkDefs, {
+    experimentName: "2023-08-01-resume-tracking",
+    experimentVariation: links.map((link) => link.key).join("-"),
+    links,
+  });
 }
