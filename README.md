@@ -124,3 +124,9 @@ npx arc deploy --production
 ```
 
 Will create endpoints at: https://k61aw4mwkc.execute-api.us-west-1.amazonaws.com
+
+# Database seeding
+
+For local development, feel free to add any mock DynamoDB data to the `sandbox-seed.js` file.
+
+More info available here: https://arc.codes/docs/en/reference/cli/sandbox
