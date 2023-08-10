@@ -5,9 +5,9 @@ const linkDefs = require("./links.json");
 exports.handler = arc.http.async(handler);
 
 async function handler(req) {
-  // Partner comes in via URL query parameter.
-  // We will need this in the weeks to come.
-  // const partner = req.query.partner;
+  // These values comes in via URL query parameter.
+  const host = req.query.host;
+  const language = req.query.language;
 
   try {
     const throttles = [...throttleDefs];
@@ -34,7 +34,7 @@ async function handler(req) {
 
     console.log(throttles);
 
-    const allowedLinks = pickAllowedLinks(throttles, 3);
+    const allowedLinks = pickAllowedLinks(throttles, host, 3);
     const data = assembleData(allowedLinks);
 
     return {
@@ -45,7 +45,7 @@ async function handler(req) {
     // error occurred trying to lookup throttles
     console.log(e);
 
-    const randomLinks = pickRandom(linkDefs.links, 3);
+    const randomLinks = pickRandomLinks(linkDefs.links, host, 3);
     const data = assembleData(randomLinks);
 
     // return default info
@@ -56,15 +56,16 @@ async function handler(req) {
   }
 }
 
-function pickRandom(array, n = 3) {
-  return array
-    .map((value) => ({ value, sort: Math.random() }))
+function pickRandomLinks(links, host, n = 3) {
+  return links
+    .filter((link) => link.key !== host)
+    .map((link) => ({ link, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value)
+    .map(({ link }) => link)
     .slice(0, n);
 }
 
-function pickAllowedLinks(throttles, n) {
+function pickAllowedLinks(throttles, host, n) {
   const links = { ...linkDefs };
 
   const data = links.links.reduce((bucket, link) => {
@@ -76,7 +77,7 @@ function pickAllowedLinks(throttles, n) {
     return bucket;
   }, []);
 
-  return pickRandom(data, n);
+  return pickRandomLinks(data, host, n);
 }
 
 function assembleData(links) {
