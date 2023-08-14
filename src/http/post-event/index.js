@@ -1,4 +1,3 @@
-//@ts-check
 let arc = require("@architect/functions");
 const throttles = require("@architect/shared/throttles.json");
 

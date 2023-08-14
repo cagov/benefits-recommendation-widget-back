@@ -1,13 +1,15 @@
 let arc = require("@architect/functions");
 const throttleDefs = require("@architect/shared/throttles.json");
-const linkDefs = require("./links.json");
+const linkDefs = require("@architect/shared/links.json");
 
 exports.handler = arc.http.async(handler);
 
 async function handler(req) {
-  // These values comes in via URL query parameter.
+  // These values come in via URL query parameter.
   const host = req.query.host;
-  const language = req.query.language;
+  const language = req.query.language || "en";
+
+  const links = assembleLinks(language);
 
   try {
     const throttles = [...throttleDefs];
@@ -29,12 +31,9 @@ async function handler(req) {
       });
     });
 
-    // Wait for all of our throttle queries to finish.
     await Promise.all(promises);
 
-    console.log(throttles);
-
-    const allowedLinks = pickAllowedLinks(throttles, host, 3);
+    const allowedLinks = pickAllowedLinks(links, throttles, host, 3);
     const data = assembleData(allowedLinks);
 
     return {
@@ -42,13 +41,12 @@ async function handler(req) {
       json: JSON.stringify(data),
     };
   } catch (e) {
-    // error occurred trying to lookup throttles
-    console.log(e);
+    console.log(e); // Log the error.
 
-    const randomLinks = pickRandomLinks(linkDefs.links, host, 3);
+    // Just get random default data.
+    const randomLinks = pickRandomLinks(links, host, 3);
     const data = assembleData(randomLinks);
 
-    // return default info
     return {
       cors: true,
       json: JSON.stringify(data),
@@ -65,10 +63,8 @@ function pickRandomLinks(links, host, n = 3) {
     .slice(0, n);
 }
 
-function pickAllowedLinks(throttles, host, n) {
-  const links = { ...linkDefs };
-
-  const data = links.links.reduce((bucket, link) => {
+function pickAllowedLinks(links, throttles, host, n) {
+  const data = links.reduce((bucket, link) => {
     const blockingThrottles = throttles.filter(
       (throttle) => throttle.urls.includes(link.url) && throttle.exceeded
     );
@@ -81,9 +77,34 @@ function pickAllowedLinks(throttles, host, n) {
 }
 
 function assembleData(links) {
-  return Object.assign(linkDefs, {
+  return {
+    header: "Apply for more benefits!",
+    tagline: "You might be able to get:",
     experimentName: "2023-08-01-resume-tracking",
     experimentVariation: links.map((link) => link.key).join("-"),
     links,
+  };
+}
+
+function assembleLinks(language = "en") {
+  // Unless it's Chinese, strip the language code down to two characters.
+  // We need to preserve the Chinese code to display Traditional vs. Simplified.
+  const langKey = language.startsWith("zh") ? language : language.slice(0, 2);
+
+  // Return a single set of values for each link, based on language.
+  // Default to English where values are unavailable.
+  const links = Object.keys(linkDefs).map((linkKey) => {
+    const link = linkDefs[linkKey];
+
+    return {
+      linktext: link[langKey]?.linktext || link.en.linktext,
+      description: link[langKey]?.description || link.en.description,
+      program: link[langKey]?.program || link.en.program,
+      url: link[langKey]?.url || link.en.url,
+      graphic: link[langKey]?.graphic || link.en.graphic,
+      key: linkKey,
+    };
   });
+
+  return links;
 }
