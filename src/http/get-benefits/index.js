@@ -1,6 +1,7 @@
 let arc = require("@architect/functions");
 const throttleDefs = require("@architect/shared/throttles.json");
 const linkDefs = require("@architect/shared/links.json");
+const icons = require("@architect/shared/icons.js");
 
 exports.handler = arc.http.async(handler);
 
@@ -96,12 +97,16 @@ function assembleLinks(language = "en") {
   const links = Object.keys(linkDefs).map((linkKey) => {
     const link = linkDefs[linkKey];
 
+    // Get the SVG markup for the icon.
+    const iconKey = link[langKey]?.icon || link.en.icon;
+    const iconGraphic = icons[iconKey];
+
     return {
       linktext: link[langKey]?.linktext || link.en.linktext,
       description: link[langKey]?.description || link.en.description,
       program: link[langKey]?.program || link.en.program,
       url: link[langKey]?.url || link.en.url,
-      graphic: link[langKey]?.graphic || link.en.graphic,
+      graphic: iconGraphic,
       key: linkKey,
     };
   });
