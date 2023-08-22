@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Exported by architect/package@8.1.3 on 2023-01-24T20:47:10.517Z
+Description: Exported by architect/package@8.5.0 on 2023-08-22T17:20:48.985Z
 Resources:
   Role:
     Type: AWS::IAM::Role
@@ -215,8 +215,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/fa6e62b43e2790e1447359125a8178a2
-      Runtime: nodejs14.x
+      CodeUri: s3://cagov-deployment-artifacts/34380ad97d5ecd48586e30882ab8945f
+      Runtime: nodejs16.x
       Architectures:
       - x86_64
       MemorySize: 1152
@@ -248,12 +248,17 @@ Resources:
             Method: GET
             ApiId:
               Ref: HTTP
+    ArcMetadata:
+      pragma: http
+      name: get /benefits
+      method: get
+      path: /benefits
   GetCatchallHTTPLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/ca4a121eb1dac224853cd9aec2432a81
-      Runtime: nodejs14.x
+      CodeUri: s3://cagov-deployment-artifacts/c5c1ac6a24e8e090081cc3fef924e9b2
+      Runtime: nodejs16.x
       Architectures:
       - x86_64
       MemorySize: 1152
@@ -271,6 +276,7 @@ Resources:
             Ref: AWS::StackName
           ARC_STATIC_BUCKET:
             Ref: StaticBucket
+          ARC_STATIC_SPA: false
       Role:
         Fn::Sub:
         - arn:aws:iam::${AWS::AccountId}:role/${roleName}
@@ -284,12 +290,18 @@ Resources:
             Method: GET
             ApiId:
               Ref: HTTP
+    ArcMetadata:
+      pragma: http
+      name: get /*
+      method: get
+      path: /*
+      arcStaticAssetProxy: true
   PostEventHTTPLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/2e3e8603ecded8139cfaabbcfcb0f084
-      Runtime: nodejs14.x
+      CodeUri: s3://cagov-deployment-artifacts/09a007fa240927ce07c8ac0e84749771
+      Runtime: nodejs16.x
       Architectures:
       - x86_64
       MemorySize: 1152
@@ -321,12 +333,17 @@ Resources:
             Method: POST
             ApiId:
               Ref: HTTP
+    ArcMetadata:
+      pragma: http
+      name: post /event
+      method: post
+      path: /event
   OptionsBenefitsHTTPLambda:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://benefits-recommendation-api-cfn-deployments-016f0/2f8a2c817ebb4c09b6fae1780810827e
-      Runtime: nodejs14.x
+      CodeUri: s3://cagov-deployment-artifacts/4d97925581987b4e7029c6695b6d7606
+      Runtime: nodejs16.x
       Architectures:
       - x86_64
       MemorySize: 1152
@@ -358,6 +375,11 @@ Resources:
             Method: OPTIONS
             ApiId:
               Ref: HTTP
+    ArcMetadata:
+      pragma: http
+      name: options /benefits
+      method: options
+      path: /benefits
   EventsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -404,6 +426,11 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
   StaticBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
