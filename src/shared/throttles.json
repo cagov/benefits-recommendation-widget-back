@@ -16,5 +16,10 @@
     "name": "CALWORKS",
     "urls": ["https://benefitscal.com/r/cwodiwidgeten"],
     "limit": 0
+  },
+  {
+    "name": "LIHEAP",
+    "urls": ["https://caliheapapply.com"],
+    "limit": 0
   }
 ]

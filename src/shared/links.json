@@ -22,17 +22,8 @@
       "linktext": "Up to $30 off high-speed internet",
       "description": "",
       "program": "How to apply",
-      "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp/",
+      "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp",
       "icon": "wiFi"
-    }
-  },
-  "CALWORKS": {
-    "en": {
-      "linktext": "Cash aid if you have kids",
-      "description": "",
-      "program": "How to apply for CalWORKs",
-      "url": "https://benefitscal.com/r/cwodiwidgeten",
-      "icon": "moneyStack"
     }
   },
   "CALFRESH": {
@@ -44,6 +35,15 @@
       "icon": "foodBasket"
     }
   },
+  "CALWORKS": {
+    "en": {
+      "linktext": "Cash aid if you have kids",
+      "description": "",
+      "program": "How to apply for CalWORKs",
+      "url": "https://benefitscal.com/r/cwodiwidgeten",
+      "icon": "moneyStack"
+    }
+  },
   "LIHWAP": {
     "en": {
       "linktext": "Help paying water bills",
@@ -51,6 +51,15 @@
       "program": "How to apply for LIHWAP",
       "url": "https://www.csd.ca.gov/Pages/WaterBill.aspx",
       "icon": "waterDrops"
+    }
+  },
+  "LIHEAP": {
+    "en": {
+      "linktext": "Help paying energy bills",
+      "description": "",
+      "program": "How to apply for LIHEAP",
+      "url": "https://caliheapapply.com",
+      "icon": "shock"
     }
   }
 }
