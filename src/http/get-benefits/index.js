@@ -107,20 +107,27 @@ function assembleLinks(language = "en") {
 
   // Return a single set of values for each link, based on language.
   // Default to English where values are unavailable.
-  const links = Object.keys(linkDefs).map((linkKey) => {
-    const link = linkDefs[linkKey];
+  const links = Object.keys(linkDefs).map((key) => {
+    const link = linkDefs[key];
 
     // Get the SVG markup for the icon.
     const iconKey = link[langKey]?.icon || link.en.icon;
-    const iconGraphic = icons[iconKey];
+    const graphic = icons[iconKey];
+
+    const lead = link[langKey]?.lead || link.en.lead || "";
+    const catalyst = link[langKey]?.catalyst || link.en.catalyst || "";
+    const description = link[langKey]?.description || link.en.description || "";
+    const url = link[langKey]?.url || link.en.url || "";
 
     return {
-      linktext: link[langKey]?.linktext || link.en.linktext,
-      description: link[langKey]?.description || link.en.description,
-      program: link[langKey]?.program || link.en.program,
-      url: link[langKey]?.url || link.en.url,
-      graphic: iconGraphic,
-      key: linkKey,
+      linktext: lead, // linktext depreciated
+      program: catalyst, // program depreciated
+      lead,
+      catalyst,
+      description, // description possibly depreciated
+      url,
+      graphic,
+      key,
     };
   });
 

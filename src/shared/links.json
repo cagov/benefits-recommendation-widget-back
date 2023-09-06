@@ -1,63 +1,56 @@
 {
   "EITC": {
     "en": {
-      "linktext": "Tax credits for working",
-      "description": "",
-      "program": "How to file",
+      "lead": "Tax credits for working",
+      "catalyst": "How to file",
       "url": "https://www.ftb.ca.gov/about-ftb/newsroom/caleitc/index.html",
       "icon": "taxBook"
     }
   },
   "WIC": {
     "en": {
-      "linktext": "Cash aid for infant nutrition",
-      "description": "",
-      "program": "How to get WIC",
+      "lead": "Cash aid for infant nutrition",
+      "catalyst": "How to get WIC",
       "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC#HowCanIGetWIC",
       "icon": "familyPeople"
     }
   },
   "ACP": {
     "en": {
-      "linktext": "Up to $30 off high-speed internet",
-      "description": "",
-      "program": "How to apply",
+      "lead": "Up to $30 off high-speed internet",
+      "catalyst": "How to apply",
       "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp",
       "icon": "wiFi"
     }
   },
   "CALFRESH": {
     "en": {
-      "linktext": "Money for food",
-      "description": "",
-      "program": "How to apply for CalFresh",
+      "lead": "Money for food",
+      "catalyst": "How to apply for CalFresh",
       "url": "https://www.getcalfresh.org/s/ODIwidget",
       "icon": "foodBasket"
     }
   },
   "CALWORKS": {
     "en": {
-      "linktext": "Cash aid if you have kids",
-      "description": "",
-      "program": "How to apply for CalWORKs",
+      "lead": "Cash aid if you have kids",
+      "catalyst": "How to apply for CalWORKs",
       "url": "https://benefitscal.com/r/cwodiwidgeten",
       "icon": "moneyStack"
     }
   },
   "LIHWAP": {
     "en": {
-      "linktext": "Help paying water bills",
-      "description": "",
-      "program": "How to apply for LIHWAP",
+      "lead": "Help paying water bills",
+      "catalyst": "How to apply for LIHWAP",
       "url": "https://www.csd.ca.gov/Pages/WaterBill.aspx",
       "icon": "waterDrops"
     }
   },
   "LIHEAP": {
     "en": {
-      "linktext": "Help paying energy bills",
-      "description": "",
-      "program": "How to apply for LIHEAP",
+      "lead": "Help paying energy bills",
+      "catalyst": "How to apply for LIHEAP",
       "url": "https://caliheapapply.com",
       "icon": "shock"
     }
