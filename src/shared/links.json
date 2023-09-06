@@ -1,13 +1,4 @@
 {
-  "LIHWAP": {
-    "en": {
-      "linktext": "Help paying water bills",
-      "description": "",
-      "program": "How to apply for LIHWAP",
-      "url": "https://www.csd.ca.gov/Pages/WaterBill.aspx",
-      "icon": "waterDrops"
-    }
-  },
   "EITC": {
     "en": {
       "linktext": "Tax credits for working",
@@ -17,48 +8,58 @@
       "icon": "taxBook"
     }
   },
+  "WIC": {
+    "en": {
+      "linktext": "Cash aid for infant nutrition",
+      "description": "",
+      "program": "How to get WIC",
+      "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC#HowCanIGetWIC",
+      "icon": "familyPeople"
+    }
+  },
+  "ACP": {
+    "en": {
+      "linktext": "Up to $30 off high-speed internet",
+      "description": "",
+      "program": "How to apply",
+      "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp",
+      "icon": "wiFi"
+    }
+  },
   "CALFRESH": {
     "en": {
       "linktext": "Money for food",
       "description": "",
       "program": "How to apply for CalFresh",
-      "url": "https://benefitscal.com/r/cfodiwidgeten",
+      "url": "https://www.getcalfresh.org/s/ODIwidget",
       "icon": "foodBasket"
-    },
-    "es": {
-      "description": "",
-      "linktext": "Dinero para comida",
-      "program": "Cómo solicitar CalWORKs",
-      "url": "https://benefitscal.com/r/cwodiwidgeten"
-    }
-  },
-  "WIC": {
-    "en": {
-      "linktext": "Healthy food for your growing family",
-      "description": "",
-      "program": "How to get WIC",
-      "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC#HowCanIGetWIC",
-      "icon": "familyPeople"
-    },
-    "es": {
-      "description": "",
-      "linktext": "Alimentos saludables para su familia en crecimiento",
-      "program": "Cómo llegar WIC",
-      "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC?utm_source=UI&utm_medium=referral&utm_campaign=EDD#HowCanIGetWIC"
     }
   },
   "CALWORKS": {
     "en": {
-      "linktext": "Help for parents to work or study",
+      "linktext": "Cash aid if you have kids",
       "description": "",
       "program": "How to apply for CalWORKs",
       "url": "https://benefitscal.com/r/cwodiwidgeten",
       "icon": "moneyStack"
-    },
-    "es": {
+    }
+  },
+  "LIHWAP": {
+    "en": {
+      "linktext": "Help paying water bills",
       "description": "",
-      "linktext": "Ayuda para que los padres trabajen o estudien",
-      "program": "Cómo solicitar CalWORKs"
+      "program": "How to apply for LIHWAP",
+      "url": "https://www.csd.ca.gov/Pages/WaterBill.aspx",
+      "icon": "waterDrops"
+    }
+  },
+  "LIHEAP": {
+    "en": {
+      "linktext": "Help paying energy bills",
+      "description": "",
+      "program": "How to apply for LIHEAP",
+      "url": "https://caliheapapply.com",
+      "icon": "shock"
     }
   }
 }

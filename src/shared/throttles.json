@@ -6,5 +6,20 @@
       "https://benefitscal.com/r/cfodiwidgeten"
     ],
     "limit": 12000
+  },
+  {
+    "name": "LIHWAP",
+    "urls": ["https://www.csd.ca.gov/Pages/WaterBill.aspx"],
+    "limit": 0
+  },
+  {
+    "name": "CALWORKS",
+    "urls": ["https://benefitscal.com/r/cwodiwidgeten"],
+    "limit": 0
+  },
+  {
+    "name": "LIHEAP",
+    "urls": ["https://caliheapapply.com"],
+    "limit": 0
   }
 ]
