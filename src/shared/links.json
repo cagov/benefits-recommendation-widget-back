@@ -4,7 +4,8 @@
       "lead": "Tax credits for working",
       "catalyst": "How to file",
       "url": "https://www.ftb.ca.gov/about-ftb/newsroom/caleitc/index.html",
-      "icon": "taxBook"
+      "icon": "taxBook",
+      "analytics": "ga"
     }
   },
   "WIC": {
@@ -12,7 +13,8 @@
       "lead": "Cash aid for infant nutrition",
       "catalyst": "How to get WIC",
       "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC#HowCanIGetWIC",
-      "icon": "familyPeople"
+      "icon": "familyPeople",
+      "analytics": "ga"
     }
   },
   "ACP": {
@@ -20,7 +22,8 @@
       "lead": "Up to $30 off high-speed internet",
       "catalyst": "How to apply",
       "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp",
-      "icon": "wiFi"
+      "icon": "wiFi",
+      "analytics": "ga"
     }
   },
   "CALFRESH": {
@@ -28,7 +31,8 @@
       "lead": "Money for food",
       "catalyst": "How to apply for CalFresh",
       "url": "https://www.getcalfresh.org/s/ODIwidget",
-      "icon": "foodBasket"
+      "icon": "foodBasket",
+      "analytics": "ga"
     }
   },
   "CALWORKS": {
@@ -36,7 +40,8 @@
       "lead": "Cash aid if you have kids",
       "catalyst": "How to apply for CalWORKs",
       "url": "https://benefitscal.com/r/cwodiwidgeten",
-      "icon": "moneyStack"
+      "icon": "moneyStack",
+      "analytics": "ga"
     }
   },
   "LIHWAP": {
@@ -44,7 +49,8 @@
       "lead": "Help paying water bills",
       "catalyst": "How to apply for LIHWAP",
       "url": "https://www.csd.ca.gov/Pages/WaterBill.aspx",
-      "icon": "waterDrops"
+      "icon": "waterDrops",
+      "analytics": "ga"
     }
   },
   "LIHEAP": {
@@ -52,7 +58,8 @@
       "lead": "Help paying energy bills",
       "catalyst": "How to apply for LIHEAP",
       "url": "https://caliheapapply.com",
-      "icon": "shock"
+      "icon": "shock",
+      "analytics": "ga"
     }
   }
 }

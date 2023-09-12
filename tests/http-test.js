@@ -26,19 +26,20 @@ test("get /benefits", async (t) => {
 /**
  * Ensure we don't deliver a link back to the same host.
  */
-test("get /benefits?host=CALFRESH", async (t) => {
+test("get /benefits?host=https://www.getcalfresh.org/s/ODIwidget", async (t) => {
   t.plan(10);
 
   // Repeat the test five times.
   for (i = 0; i < 5; i++) {
     let result = await tiny.get({
-      url: targetServer + "/benefits?host=CALFRESH",
+      url:
+        targetServer + "/benefits?host=https://www.getcalfresh.org/s/ODIwidget",
     });
 
     t.ok(result, "got 200 response");
 
     let links = JSON.parse(result.body).links;
-    let hostLinksFound = links.some((link) => link.key === "CALFRESH");
+    let hostLinksFound = links.some((link) => link.id === "CALFRESH");
 
     if (hostLinksFound) {
       t.fail("served link back to same host");

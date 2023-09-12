@@ -1,5 +1,6 @@
 let arc = require("@architect/functions");
 const throttles = require("@architect/shared/throttles.json");
+const url = require("@architect/shared/url");
 
 /**
  * @description Event receiving endpoint for benefits recommendation widget
@@ -55,7 +56,7 @@ exports.handler = async function http(req) {
 
       // find relevant throttle
       const activeThrottles = throttles.filter((throttle) =>
-        throttle.urls.includes(postData.link)
+        url.findMatch(throttle.urls, postData.link)
       );
 
       if (activeThrottles.length < 1) {
