@@ -7,7 +7,7 @@
     "test": "node tests/http-test.js"
   },
   "devDependencies": {
-    "@architect/architect": "^10.3.4",
+    "@architect/architect": "^10.14.2",
     "tape": "^5.5.3",
     "tiny-json-http": "^7.4.2"
   },
@@ -16,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@architect/functions": "^5.2.1",
+    "@architect/functions": "^7.0.0",
     "arc-macro-cors": "^2.0.0"
   }
 }

@@ -15,7 +15,7 @@ const url = require("@architect/shared/url");
  * @property {string} experimentName Name of current experiment being run on this widget display
  * @property {string} experimentVariation Name of the variation of this experiment, could be the order of links being displayed
  */
-exports.handler = async function http(req) {
+exports.handler = arc.http(async (req) => {
   const dynamo = await arc.tables();
   const events = dynamo.events;
 
@@ -98,4 +98,4 @@ exports.handler = async function http(req) {
       },
     };
   }
-};
+});
