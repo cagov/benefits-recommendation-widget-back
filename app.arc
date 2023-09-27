@@ -4,9 +4,7 @@ benefits-recommendation-api
 @cors
 @http
 get /benefits
-get /hosts
 options /benefits
-options /hosts
 post /event
 
 @scheduled

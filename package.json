@@ -8,8 +8,7 @@
   },
   "devDependencies": {
     "@architect/architect": "^10.14.2",
-    "tape": "^5.5.3",
-    "tiny-json-http": "^7.4.2"
+    "tape": "^5.5.3"
   },
   "main": "index.js",
   "keywords": [],

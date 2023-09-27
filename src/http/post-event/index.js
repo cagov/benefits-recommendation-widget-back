@@ -27,16 +27,8 @@ exports.handler = arc.http(async (req) => {
 
   const dynamo = await arc.tables();
   const events = dynamo.events;
-
-  let incomingString = req.body;
-  if (req.body.indexOf("userAgent") === -1) {
-    const buff = Buffer.from(req.body, "base64");
-    incomingString = buff.toString("ascii");
-  }
-  let postData = incomingString;
-  if (typeof req.body === "string") {
-    postData = JSON.parse(incomingString);
-  }
+  const postData =
+    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   try {
     if (!postData.event) throw ReferenceError("missing event type");
