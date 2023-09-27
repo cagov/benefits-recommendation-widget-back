@@ -45,8 +45,8 @@ const rules = [
 ];
 
 /** Apply the rules to the list of links. */
-const applyRules = async (allLinks, host) => {
-  const throttles = await getThrottles();
+const applyRules = async (definitions, allLinks, host) => {
+  const throttles = await getThrottles(definitions);
 
   const params = {
     host,

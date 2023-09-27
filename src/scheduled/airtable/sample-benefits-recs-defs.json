@@ -1,0 +1,153 @@
+{
+  "note": "This is just a sample of the airtable function's output. This file is pulled from S3 in actual use.",
+  "please": "Keep this up to date so we have a decent reference.",
+  "name": "Benefits Recommender Definitions",
+  "description": "Defines target links, throttles, and hosts for the widget.",
+  "updated": "2023-09-25T22:40:40.795Z",
+  "targets": [
+    {
+      "id": "wic",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Cash aid for infant nutrition",
+          "catalyst": "How to get WIC",
+          "icon": "familyPeople",
+          "url": "https://myfamily.wic.ca.gov/Home/HowCanIGetWIC#HowCanIGetWIC",
+          "id": "wic-en"
+        }
+      },
+      "throttles": []
+    },
+    {
+      "id": "eitc",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Tax credits for working",
+          "catalyst": "How to file",
+          "icon": "taxBook",
+          "url": "https://www.ftb.ca.gov/about-ftb/newsroom/caleitc/index.html",
+          "id": "eitc-en"
+        },
+        "es": {
+          "analytics": "ga",
+          "lead": "Test",
+          "catalyst": "Test",
+          "icon": "taxBook",
+          "url": "https://www.test.com",
+          "id": "eitc-es"
+        }
+      },
+      "throttles": []
+    },
+    {
+      "id": "calworks",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Cash aid if you have kids",
+          "catalyst": "How to apply for CalWORKs",
+          "icon": "moneyStack",
+          "url": "https://benefitscal.com/r/cwodiwidgeten",
+          "id": "calworks-en"
+        }
+      },
+      "throttles": ["calfresh_calsaws_off"]
+    },
+    {
+      "id": "acp",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Up to $30 off high-speed internet",
+          "catalyst": "How to apply",
+          "icon": "wiFi",
+          "url": "https://broadbandforall.cdt.ca.gov/affordable-connectivity-program/apply-for-acp",
+          "id": "acp-en"
+        }
+      },
+      "throttles": []
+    },
+    {
+      "id": "liheap",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Help paying energy bills",
+          "catalyst": "How to apply for LIHEAP",
+          "icon": "shock",
+          "url": "https://caliheapapply.com",
+          "id": "liheap-en"
+        }
+      },
+      "throttles": ["liheap_off"]
+    },
+    {
+      "id": "lihwap",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Help paying water bills",
+          "catalyst": "How to apply for LIHWAP",
+          "icon": "waterDrops",
+          "url": "https://www.csd.ca.gov/WaterBill",
+          "id": "lihwap-en"
+        }
+      },
+      "throttles": ["lihwap_exp"]
+    },
+    {
+      "id": "calfresh",
+      "translations": {
+        "en": {
+          "analytics": "ga",
+          "lead": "Money for food",
+          "catalyst": "How to apply for CalFresh",
+          "icon": "foodBasket",
+          "url": "https://www.getcalfresh.org/s/ODIwidget",
+          "id": "calfresh-en"
+        }
+      },
+      "throttles": ["calfresh_calsaws_off"]
+    }
+  ],
+  "throttles": [
+    {
+      "id": "calfresh_calsaws_off",
+      "limit": 0,
+      "urls": [
+        "https://www.getcalfresh.org/s/ODIwidget",
+        "https://benefitscal.com/r/cwodiwidgeten"
+      ]
+    },
+    {
+      "id": "liheap_off",
+      "limit": 0,
+      "urls": ["https://caliheapapply.com"]
+    },
+    {
+      "id": "lihwap_exp",
+      "end": "2024-02-24",
+      "urls": ["https://www.csd.ca.gov/WaterBill"]
+    }
+  ],
+  "hosts": [
+    {
+      "id": "edd_pfl_submit",
+      "urls": [
+        "https://sdio.edd.ca.gov/DIAE/Pages/ExternalUser/InitialClaim/Confirmation.aspx"
+      ]
+    },
+    {
+      "id": "edd_ui_recert",
+      "urls": [
+        "https://uio.edd.ca.gov/UIO/Pages/ExternalUser/Certification/FormCCA4581RegularDUACertificationQuestionsConfirmation.aspx"
+      ]
+    },
+    {
+      "id": "cdph_wic_elig",
+      "urls": ["https://myfamily.wic.ca.gov/Home/AmIEligible"]
+    }
+  ]
+}

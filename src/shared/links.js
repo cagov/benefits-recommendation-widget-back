@@ -1,5 +1,3 @@
-const linkDefs = require("./links.json");
-const hostDefs = require("./hosts.json");
 const icons = require("./icons");
 const url = require("./url");
 
@@ -12,7 +10,7 @@ const AnalyticEngines = {
  * Find the host definition for a given host url.
  * @param {string} host
  */
-const findHostDef = (host) => {
+const findHostDef = (host, hostDefs) => {
   const pHostUrl = url.parse(host);
 
   if (pHostUrl) {
@@ -51,31 +49,40 @@ const addAnalytics = (linkUrl, analytics, hostDef) => {
 
 /**
  * Construct link objects for the given language and host.
+ * @param {object} definitions
  * @param {string} language
  * @param {string} host
  * @returns
  */
-exports.assembleLinks = (language, host) => {
+exports.assembleLinks = (definitions, language, host) => {
+  const { targets, hosts: hostDefs } = definitions;
+  const hostDef = findHostDef(host, hostDefs);
+
   // Unless it's Chinese, strip the language code down to two characters.
   // We need to preserve the Chinese code to display Traditional vs. Simplified.
   const langKey = language.startsWith("zh") ? language : language.slice(0, 2);
 
-  const hostDef = findHostDef(host);
-
   // Return a single set of values for each link, based on language.
   // Default to English where values are unavailable.
-  const links = Object.keys(linkDefs).map((key) => {
-    const link = linkDefs[key];
+  const links = targets.map((target) => {
+    const { id, translations } = target;
 
     // Get the SVG markup for the icon.
-    const iconKey = link[langKey]?.icon || link.en.icon;
+    const iconKey = translations[langKey]?.icon || translations.en.icon;
     const graphic = icons[iconKey];
 
-    const lead = link[langKey]?.lead || link.en.lead || "";
-    const catalyst = link[langKey]?.catalyst || link.en.catalyst || "";
-    const description = link[langKey]?.description || link.en.description || "";
-    const linkUrl = link[langKey]?.url || link.en.url || "";
-    const analytics = link[langKey]?.analytics || link.en.analytics || "";
+    const lead = translations[langKey]?.lead || translations.en.lead || "";
+
+    const catalyst =
+      translations[langKey]?.catalyst || translations.en.catalyst || "";
+
+    const description =
+      translations[langKey]?.description || translations.en.description || "";
+
+    const linkUrl = translations[langKey]?.url || translations.en.url || "";
+
+    const analytics =
+      translations[langKey]?.analytics || translations.en.analytics || "";
 
     const urlWithAnalytics = addAnalytics(linkUrl, analytics, hostDef);
 
@@ -88,7 +95,7 @@ exports.assembleLinks = (language, host) => {
       url: urlWithAnalytics,
       graphic,
       language: langKey,
-      id: key,
+      id,
     };
   });
 

@@ -17,6 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "@architect/functions": "^7.0.0",
+    "@aws-sdk/client-cloudfront": "^3.418.0",
+    "@aws-sdk/client-s3": "^3.418.0",
     "arc-macro-cors": "^2.0.0"
   }
 }
