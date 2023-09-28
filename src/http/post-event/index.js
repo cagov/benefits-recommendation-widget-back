@@ -1,6 +1,10 @@
 let arc = require("@architect/functions");
-const throttles = require("@architect/shared/throttles.json");
 const url = require("@architect/shared/url");
+const { getDefinitions } = require("@architect/shared/s3");
+
+// Definitions will be loaded from benefits-recs-defs.json in S3.
+// We keep it outside the handler to cache it between Lambda runs.
+let definitions = {};
 
 /**
  * @description Event receiving endpoint for benefits recommendation widget
@@ -16,18 +20,15 @@ const url = require("@architect/shared/url");
  * @property {string} experimentVariation Name of the variation of this experiment, could be the order of links being displayed
  */
 exports.handler = arc.http(async (req) => {
+  // If definitions is empty, fetch it from S3.
+  if (Object.keys(definitions).length === 0) {
+    definitions = await getDefinitions();
+  }
+
   const dynamo = await arc.tables();
   const events = dynamo.events;
-
-  let incomingString = req.body;
-  if (req.body.indexOf("userAgent") === -1) {
-    const buff = Buffer.from(req.body, "base64");
-    incomingString = buff.toString("ascii");
-  }
-  let postData = incomingString;
-  if (typeof req.body === "string") {
-    postData = JSON.parse(incomingString);
-  }
+  const postData =
+    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   try {
     if (!postData.event) throw ReferenceError("missing event type");
@@ -55,7 +56,7 @@ exports.handler = arc.http(async (req) => {
       console.log("Recording a click; checking for throttles");
 
       // find relevant throttle
-      const activeThrottles = throttles.filter((throttle) =>
+      const activeThrottles = definitions.throttles.filter((throttle) =>
         url.findMatch(throttle.urls, postData.link)
       );
 
@@ -64,9 +65,9 @@ exports.handler = arc.http(async (req) => {
       }
 
       activeThrottles.forEach(async (throttle) => {
-        console.log(`Throttle match: ${throttle.name}`);
+        console.log(`Throttle match: ${throttle.id}`);
 
-        const name = throttle.name;
+        const name = throttle.id;
         const day = new Date().toISOString().split("T")[0].toString();
 
         // increment counter, if record not there create it
@@ -82,14 +83,11 @@ exports.handler = arc.http(async (req) => {
     }
 
     return {
-      cors: true,
-      status: 201,
-      json: event,
+      status: 204,
     };
   } catch (e) {
     console.log(e);
     return {
-      cors: true,
       status: 500,
       json: {
         name: e.name,

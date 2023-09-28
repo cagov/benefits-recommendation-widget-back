@@ -1,8 +1,21 @@
 const test = require("tape");
-const tiny = require("tiny-json-http");
 const sandbox = require("@architect/sandbox");
 let arc = require("@architect/functions");
 const targetServer = "http://localhost:3333";
+
+const fetchJson = (url, options = {}) => {
+  const opts = Object.assign(
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    },
+    options
+  );
+
+  return fetch(url, opts);
+};
 
 /**
  * first we need to start the local http server
@@ -18,8 +31,9 @@ test("sandbox.start", async (t) => {
  */
 test("get /benefits", async (t) => {
   t.plan(1);
-  let result = await tiny.get({ url: targetServer + "/benefits" });
-  t.ok(result, "got 200 response");
+  const url = `${targetServer}/benefits`;
+  let result = await fetchJson(url);
+  t.ok(result.status === 200, "got 200 response");
   // console.log(result)
 });
 
@@ -31,15 +45,13 @@ test("get /benefits?host=https://www.getcalfresh.org/s/ODIwidget", async (t) => 
 
   // Repeat the test five times.
   for (i = 0; i < 5; i++) {
-    let result = await tiny.get({
-      url:
-        targetServer + "/benefits?host=https://www.getcalfresh.org/s/ODIwidget",
-    });
+    const url = `${targetServer}/benefits?host=https://www.getcalfresh.org/s/ODIwidget`;
+    const result = await fetchJson(url);
 
-    t.ok(result, "got 200 response");
+    t.ok(result.status === 200, "got 200 response");
 
-    let links = JSON.parse(result.body).links;
-    let hostLinksFound = links.some((link) => link.id === "CALFRESH");
+    const data = JSON.parse(await result.json());
+    const hostLinksFound = data.links.some((link) => link.id === "CALFRESH");
 
     if (hostLinksFound) {
       t.fail("served link back to same host");
@@ -51,19 +63,19 @@ test("get /benefits?host=https://www.getcalfresh.org/s/ODIwidget", async (t) => 
 
 test("post /event", async (t) => {
   t.plan(1);
-  let result = await tiny.post({
-    url: targetServer + "/event",
-    data: {
+  const url = `${targetServer}/event`;
+  const result = await fetchJson(url, {
+    method: "POST",
+    body: JSON.stringify({
       event: "render",
       displayURL: "https://awebsite.ca.gov",
       userAgent: "Lynx text only browser",
       language: "en-US",
       link: "https://wic.ca.gov",
       linkText: "Apply to WIC",
-    },
+    }),
   });
-  t.ok(result.body.json.hasOwnProperty("event"), "got event response back");
-  // console.log(result.body)
+  t.ok(result.status === 204, "got 204 response");
 });
 
 // scan and get events

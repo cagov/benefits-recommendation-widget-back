@@ -8,8 +8,7 @@
   },
   "devDependencies": {
     "@architect/architect": "^10.14.2",
-    "tape": "^5.5.3",
-    "tiny-json-http": "^7.4.2"
+    "tape": "^5.5.3"
   },
   "main": "index.js",
   "keywords": [],
@@ -17,6 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "@architect/functions": "^7.0.0",
+    "@aws-sdk/client-cloudfront": "^3.418.0",
+    "@aws-sdk/client-s3": "^3.418.0",
     "arc-macro-cors": "^2.0.0"
   }
 }

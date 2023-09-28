@@ -107,3 +107,4 @@ dist
 # SAM files
 sam.json
 sam.yaml
+preferences.arc
