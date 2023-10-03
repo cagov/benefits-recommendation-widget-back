@@ -31,6 +31,7 @@ events
 region us-west-1
 bucket cagov-deployment-artifacts
 runtime nodejs18.x
+timeout 15
 policies 
   arn:aws:iam::413306215966:policy/s3BucketSingle-benefits-recommendation.sinnovation.ca.gov 
   architect-default-policies
