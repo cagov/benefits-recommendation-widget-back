@@ -1,4 +1,8 @@
-# Benefits recommendation widget API
+# ARCHIVED
+
+**The Benefits Recommender project has been moved to [cagov/benefits-recommender](https://github.com/cagov/benefits-recommender). This repository is now archived.**
+
+## Benefits recommendation widget API
 
 The benefits recommendation widget is an embeddable web component that presents links to apply for California benefits available to individudals.
 
